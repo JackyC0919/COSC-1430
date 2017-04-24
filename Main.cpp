@@ -1,40 +1,52 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <array>
+#include <vector>
 using namespace std;
 
-const int SIZE = 6000;
-
 int main() {
-	//input file
-	ifstream txtFile;
-	txtFile.open("names.txt");
+	vector<string> names;
+	string line;
+	ifstream namesFile;
+	namesFile.open("names.txt");
 
-	//check error
-	if (txtFile.fail()) {
-		cerr << "Error Opening File" << endl;
-		exit(1);
-	}
-	//sorting names into array
-	int i = 0;
-	int j = 0;
-	string items;
-	string *nameList = new string[SIZE];
-	while (!txtFile.eof()) {
-		txtFile >> items;
-		j++;
-		if (i < j){
-			nameList[i] = items;
-			cout << "nameList[" << i << "]= " << nameList[i] << endl;
-			i++;
+	if (namesFile.is_open()) {
+		while (!namesFile.eof()) {
+			getline(namesFile, line);
+			names.push_back(line);
 		}
+		namesFile.close();
 	}
-	
+	else {
+		cout << "Unable to open file" << endl;
+	}
 
-	delete[] nameList;
-	nameList = NULL;
-	txtFile.close();
+	sort(names.begin(), names.end());
+	for (int i = 0; i < names.size(); i++) {
+		//cout << i << ". " << names[i] << endl;
+	}
+
+	int num = 0;
+	int sum = 0;
+	double total = 0;
+	for (int i = 0; i < names.size();) {
+		string *name = &names[i];
+		string c_name = *name;
+		i++;
+		//cout << c_name << endl;
+		for (int j = 0; j < c_name.size(); ++j) {
+			if (!isspace(c_name[j])) {
+				num = (int)(toupper(c_name[j]) - 'A' + 1);
+			}
+			sum += num;
+		}
+		total = total + (sum * i);
+		//cout << c_name << endl;
+	}
+
+	cout << "The sum total of the name-score is: " << total << endl;
+
 	system("pause");
 	return 0;
 }
