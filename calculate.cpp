@@ -5,14 +5,14 @@ using namespace std;
 
 int main() {
 
-	string str = "CHAO";
+	string name = "CHAO";
 	int num = 0;
 	int sum = 0;
 
 
-	for (int i = 0; i < str.size(); ++i) {
-		if (!isspace(str[i])) {
-			num = (int)(toupper(str[i]) - 'A'+1);
+	for (int i = 0; i < name.size(); ++i) {
+		if (!isspace(name[i])) {
+			num = (int)(toupper(name[i]) - 'A'+1);
 		}
 		sum += num;
 	}
